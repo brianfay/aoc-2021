@@ -1,0 +1,19 @@
+with open('input.txt') as input_file:
+    aim = 0
+    h_pos = 0
+    depth = 0
+
+    for line in input_file:
+        amount = int(line.rstrip()[-1])  # Assume it's always a single-digit integer
+
+        if line[0] == 'f':
+            h_pos += amount
+            depth += aim * amount
+        elif line[0] == 'd':
+            aim += amount
+        elif line[0] == 'u':
+            aim -= amount
+        else:
+            print("wat")
+
+    print(f"{h_pos} * {depth} = {h_pos * depth}")

@@ -1,8 +1,8 @@
 import queue
 
-# Use a deque with maxlen 3 and just compare the newest number to the oldest (since the middle two are always the same)
+# Use a Queue with maxlen 3 and just compare the newest number to the oldest (since the middle two are always the same)
 
-with open('inputs/1.txt') as input_file:
+with open('input.txt') as input_file:
     queue = queue.Queue(3)
     increase_count = 0
 
@@ -15,5 +15,3 @@ with open('inputs/1.txt') as input_file:
         queue.put(newest_num)
 
     print(increase_count)
-
-

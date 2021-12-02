@@ -1,4 +1,4 @@
-with open('inputs/1.txt') as input_file:
+with open('input.txt') as input_file:
     prev_num = float('inf')
     increase_count = 0
 
@@ -9,4 +9,3 @@ with open('inputs/1.txt') as input_file:
         prev_num = current_num
 
     print(increase_count)
-
