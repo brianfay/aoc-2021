@@ -3,6 +3,7 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 
+# Initialize SparkContext and read input file
 spark = SparkSession.builder.appName('aoc-2021-3.1').getOrCreate()
 data = spark.read.text('input.txt').cache()
 
