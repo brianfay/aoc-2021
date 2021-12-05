@@ -1,0 +1,65 @@
+@use 'sass:list';
+@use 'sass:string';
+@use 'sass:math';
+
+@import 'input';
+
+@function sumColumn($arr, $colIndex) {
+    $sum: 0;
+    @each $word in $arr {
+        @if string.slice($word, $colIndex, $colIndex) == '1' {
+            $sum: $sum + 1;
+        }
+    }
+    @return $sum;
+}
+
+@function binaryToDecimal($binaryString) {
+    $decimal: 0;
+    $digits: string.length($binaryString);
+    @for $i from $digits to 0 {
+        @if string.slice($binaryString, $i, $i) == '1' {
+            $decimal: $decimal + math.pow(2, $digits - $i);
+        }
+    }
+    @return $decimal;
+}
+
+// Split the big data string into individual, space-separated words
+$strings: [];
+$nextSpaceIndex: string.index($data, ' ');
+@while $nextSpaceIndex != null {
+    $word: string.slice($data, 0, $nextSpaceIndex - 1);
+    $strings: list.append($strings, $word);
+    $data: string.slice($data, $nextSpaceIndex + 1);
+
+    $nextSpaceIndex: string.index($data, ' ');
+}
+$strings: list.append($strings, $data);
+@debug $strings;
+
+// Calculate Epsilon
+$epsilon: '';
+@for $i from 1 to string.length(list.nth($strings, 1))+1 {
+    $onesCount: sumColumn($strings, $i);
+    @if $onesCount >= math.div(list.length($strings), 2) {
+        $epsilon: $epsilon + '1';
+    } @else {
+        $epsilon: $epsilon + '0';
+    }
+}
+@debug 'Epsilon: ' + $epsilon;
+
+// Calculate Gamma
+$gamma: '';
+@for $i from 1 to string.length($epsilon)+1 {
+    @if string.slice($epsilon, $i, $i) == '1' {
+        $gamma: $gamma + '0';
+    } @else {
+        $gamma: $gamma + '1';
+    }
+}
+@debug 'Gamma: ' + $gamma;
+
+// And the result!
+@debug binaryToDecimal($epsilon) * binaryToDecimal($gamma);

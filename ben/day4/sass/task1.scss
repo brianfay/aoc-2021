@@ -1,0 +1,111 @@
+@use 'sass:list';
+@use 'sass:string';
+@use 'sass:math';
+
+// Access to: $calledNumbers, $boards
+@import 'input';
+
+@function findNumberOnBoard($board, $number) {
+    @for $rowIndex from 1 to list.length($board)+1 {
+        @for $colIndex from 1 to list.length(list.nth($board, $rowIndex))+1 {
+            @if list.nth(list.nth($board, $rowIndex), $colIndex) == $number {
+                @return ($rowIndex, $colIndex);
+            }
+        }
+    }
+    @return [];
+}
+
+@function markBoard($board, $location) {
+    $rowIndex: list.nth($location, 1);
+    $colIndex: list.nth($location, 2);
+    $updatedRow: list.set-nth(list.nth($board, $rowIndex), $colIndex, -1);
+    $board: list.set-nth($board, $rowIndex, $updatedRow);
+    @return $board;
+}
+@function checkForVictory($board, $location) {
+    $rowIndex: list.nth($location, 1);
+    $colIndex: list.nth($location, 2);
+
+    // Check for a row victory
+    $allCalled: true;
+    @each $col in list.nth($board, $rowIndex) {
+        @if $allCalled == true {
+            @if $col != -1 {
+                $allCalled: false;
+            }
+        }
+    }
+    @if $allCalled {
+        @return true;
+    }
+
+    // Check for a col victory
+    $allCalled: true;
+    @for $rowI from 1 to list.length($board)+1 {
+        @if $allCalled == true {
+            @if list.nth(list.nth($board, $rowI), $colIndex) != -1 {
+                $allCalled: false;
+            }
+        }
+    }
+    @if $allCalled {
+        @return true;
+    }
+
+    @return false;
+}
+@function sumUncalledNumbers($board) {
+    $sum: 0;
+    @each $row in $board {
+        @each $col in $row {
+            @if $col != -1 {
+                $sum: $sum + $col;
+            }
+        }
+    }
+    @return $sum;
+}
+
+// Convert the massive string of board numbers into individual boards
+$boardArrays: [];
+$currentBoard: [];
+$currentRow: [];
+@for $i from 1 to list.length($boards)+1 {
+    @if list.length($currentRow) >= 5 {
+        $currentBoard: list.append($currentBoard, $currentRow);
+        $currentRow: [];
+    }
+    @if list.length($currentBoard) >= 5 {
+        $boardArrays: list.append($boardArrays, $currentBoard);
+        $currentBoard: [];
+    }
+    $currentRow: list.append($currentRow, list.nth($boards, $i));
+}
+$currentBoard: list.append($currentBoard, $currentRow);
+$boardArrays: list.append($boardArrays, $currentBoard);
+
+
+// "Call" each number, checking for victory after each
+$score: 0;
+@each $number in $calledNumbers {
+    @if $score == 0 {
+        @for $boardIndex from 1 to list.length($boardArrays)+1 {
+            $board: list.nth($boardArrays, $boardIndex);
+            $location: findNumberOnBoard($board, $number);
+            @if list.length($location) == 2 {
+                $board: markBoard($board, $location);
+                $boardArrays: list.set-nth($boardArrays, $boardIndex, $board);
+                $victory: checkForVictory($board, $location);
+                @if $victory == true {
+                    // calculate teh score
+                    $sum: sumUncalledNumbers($board);
+                    $score: $sum * $number;
+                }
+            }
+        }
+    }
+}
+
+// Print the score!
+@debug $score;

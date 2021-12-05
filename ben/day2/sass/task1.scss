@@ -1,0 +1,23 @@
+@use 'sass:list';
+
+@import 'input';
+
+$horizontal: 0;
+$depth: 0;
+
+$index: 1;
+@while $index <= list.length($data) {
+    $direction: list.nth($data, $index);
+    $amount: list.nth($data, $index+1);
+
+    @if $direction == forward {
+        $horizontal: $horizontal + $amount;
+    } @else if $direction == up {
+        $depth: $depth - $amount;
+    } @else if $direction == down {
+        $depth: $depth + $amount;
+    }
+    $index: $index+2;
+}
+
+@debug $horizontal*$depth;

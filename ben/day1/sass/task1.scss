@@ -1,0 +1,14 @@
+@import 'input';
+
+$increaseCount: 0;
+$prev: null;
+@each $item in $data {
+    @if $prev {
+        @if $prev < $item { $increaseCount: $increaseCount+1; }
+        $prev: $item;
+    } @else {
+        $prev: $item;
+    }
+}
+
+@debug $increaseCount;

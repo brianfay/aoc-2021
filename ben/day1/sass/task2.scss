@@ -1,0 +1,23 @@
+@use 'sass:list';
+
+@import 'input';
+
+// Create windows
+$windows: [];
+@for $i from 1 through list.length($data)-2 {
+    $windows: list.append($windows, (list.nth($data, $i) + list.nth($data, $i+1) + list.nth($data, $i+2)));
+}
+
+// Do the calculation
+$increaseCount: 0;
+$prev: null;
+@each $item in $windows {
+    @if $prev {
+        @if $prev < $item { $increaseCount: $increaseCount+1; }
+        $prev: $item;
+    } @else {
+        $prev: $item;
+    }
+}
+
+@debug $increaseCount;

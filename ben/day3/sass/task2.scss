@@ -1,0 +1,98 @@
+@use 'sass:list';
+@use 'sass:string';
+@use 'sass:math';
+
+@import 'input';
+
+@function sumColumn($arr, $colIndex) {
+    $sum: 0;
+    @each $word in $arr {
+        @if string.slice($word, $colIndex, $colIndex) == '1' {
+            $sum: $sum + 1;
+        }
+    }
+    @return $sum;
+}
+
+@function binaryToDecimal($binaryString) {
+    $decimal: 0;
+    $digits: string.length($binaryString);
+    @for $i from $digits to 0 {
+        @if string.slice($binaryString, $i, $i) == '1' {
+            $decimal: $decimal + math.pow(2, $digits - $i);
+        }
+    }
+    @return $decimal;
+}
+
+// Split the big data string into individual, space-separated words
+$strings: [];
+$nextSpaceIndex: string.index($data, ' ');
+@while $nextSpaceIndex != null {
+    $word: string.slice($data, 0, $nextSpaceIndex - 1);
+    $strings: list.append($strings, $word);
+    $data: string.slice($data, $nextSpaceIndex + 1);
+
+    $nextSpaceIndex: string.index($data, ' ');
+}
+$strings: list.append($strings, $data);
+@debug $strings;
+
+
+// Calculate Oxygen Rating
+$oxygenRating: list.join($strings, []);
+@for $i from 1 to string.length(list.nth($oxygenRating, 1))+1 {
+    @if list.length($oxygenRating) > 1 {
+        $onesCount: sumColumn($oxygenRating, $i);
+        $newList: [];
+        @if $onesCount >= math.div(list.length($oxygenRating), 2) {
+            // Keep words with 1 in this column
+            @each $word in $oxygenRating {
+                @if string.slice($word, $i, $i) == '1' {
+                    $newList: list.append($newList, $word);
+                }
+            }
+        } @else {
+            // Keep words with 0 in this column
+            @each $word in $oxygenRating {
+                @if string.slice($word, $i, $i) == '0' {
+                    $newList: list.append($newList, $word);
+                }
+            }
+        }
+        $oxygenRating: $newList;
+    }
+}
+$oxygenRating: list.nth($oxygenRating, 1);
+@debug 'Oxygen Rating: ' + $oxygenRating;
+
+
+// Calculate CO2 Rating
+$co2Rating: list.join($strings, []);
+@for $i from 1 to string.length(list.nth($co2Rating, 1))+1 {
+    @if list.length($co2Rating) > 1 {
+        $onesCount: sumColumn($co2Rating, $i);
+        $newList: [];
+        @if $onesCount >= math.div(list.length($co2Rating), 2) {
+            // Keep words with 0 in this column
+            @each $word in $co2Rating {
+                @if string.slice($word, $i, $i) == '0' {
+                    $newList: list.append($newList, $word);
+                }
+            }
+        } @else {
+            // Keep words with 1 in this column
+            @each $word in $co2Rating {
+                @if string.slice($word, $i, $i) == '1' {
+                    $newList: list.append($newList, $word);
+                }
+            }
+        }
+        $co2Rating: $newList;
+    }
+}
+$co2Rating: list.nth($co2Rating, 1);
+@debug 'CO2 Rating: ' + $co2Rating;
+
+// And the result!
+@debug binaryToDecimal($oxygenRating) * binaryToDecimal($co2Rating);
