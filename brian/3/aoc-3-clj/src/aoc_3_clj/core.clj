@@ -75,16 +75,6 @@
       invert-bit-list
       bit-list->decimal))
 
-(defn- ordered-filter
-  [pred coll]
-  (reduce
-   (fn [acc v]
-     (if (pred v)
-       (conj acc v)
-       acc))
-   []
-   coll))
-
 (defn common-bit-at-index
   [lines idx]
   (let [num-lines (count lines)
