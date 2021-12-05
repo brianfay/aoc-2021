@@ -1,5 +1,12 @@
 # Prerequisite: PySpark and Java 8 must be installed
 
+# Today I decided to use Spark, both for over-engineering purposes and to help me learn it.
+# It's a completely silly solution, breaking up a simple data set into a super-complicated Spark Dataset just to find
+# the most common bit in each column, using cluster-computing concepts on a single machine and a 1000-line text file.
+# It takes ~11 seconds on my MacBook, which is horrendously slow even accounting for ~3 seconds for Spark to start up.
+# But as Ben would say, Spark SQL: it Sparkles! And Spark's cool. Especially Sparksicles.
+# This was basically Spark school.
+
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 

@@ -1,5 +1,11 @@
 # Prerequisite: PySpark and Java 8 must be installed
 
+# For today, I wanted to practice using RDDs (Resilient Distributed Datasets), which are a Spark data structure that's
+# lower level than the Datasets (a.k.a. DataFrames) I used yesterday. (An RDD is basically a single stream of
+# unstructured data, while a DataFrame is more like a table with named columns.) In this case, my RDDs are made up of
+# 2-tuples in a (key, value) format, which allows for some special operations to be done "by key" (though I don't really
+# use this until part 2).
+
 from pyspark.conf import SparkConf
 from pyspark.context import SparkContext
 
