@@ -1,0 +1,114 @@
+(ns aoc-3-clj.core
+  (:require [clojure.java.io :as io]
+            [clojure.string :as st]))
+
+(defn parse-input [f]
+  (->> f
+       io/file
+       io/reader
+       line-seq))
+
+(defn common-bit-list
+  [lines]
+  (let [num-lines (count lines)
+        half-num-lines (/ num-lines 2)
+        num-bits (count (first lines))
+        arr (make-array Integer/TYPE num-bits)]
+    (doseq [l lines]
+      (doall
+       (map-indexed
+        (fn [idx ch]
+          (when (= \1 ch)
+            (aset arr idx (inc (aget arr idx)))))
+        l)))
+    arr
+    (reduce
+     (fn [acc v]
+       (cons
+        (cond (< v half-num-lines)
+              (int 0)
+
+              (> v half-num-lines)
+              (int 1)
+
+              :else
+              (int -1)) ;;weird special case for equality, doesn't actually happen in my input list
+        acc))
+     '()
+     (seq arr))))
+
+(defn bit-list->decimal [s]
+  (reduce
+   +
+   (map-indexed
+    (fn [idx v]
+      (if (= 1 v) (Math/pow 2 idx) 0))
+    s)))
+
+(defn gamma-rate
+  [lines]
+  (bit-list->decimal (common-bit-list lines)))
+
+(defn invert-bit-list [s]
+  (reduce
+   (fn [acc c]
+     (if (= 0 c)
+       (cons 1 acc)
+       (cons 0 acc)))
+   '()
+   s))
+
+(defn epsilon-rate
+  [lines]
+  (-> lines
+      common-bit-list
+      invert-bit-list
+      bit-list->decimal))
+
+(defn oxygen-generator-rating
+  [lines]
+  (let [common-bit-list (common-bit-list lines)]
+    (loop [lines lines common-bit-list common-bit-list idx 0]
+      (let [filtered-lines (filter
+                            #(= (Integer/parseInt (str (nth % idx)))
+                                (first common-bit-list))
+                            lines)]
+        (cond (= (count filtered-lines) 1)
+              (first filtered-lines)
+
+              (= (count filtered-lines) 0)
+              (last lines)
+
+              :else
+              (recur filtered-lines
+                     (rest common-bit-list)
+                     (inc idx)))))))
+
+(comment
+  (-> (parse-input "../input.txt")
+      common-bit-list)
+
+  (-> (parse-input "../input.txt")
+      gamma-rate)
+
+  (-> (parse-input "../input.txt")
+      epsilon-rate)
+
+  (-> (parse-input "../input.txt")
+      common-bit-list)
+
+  (-> (parse-input "../input.txt")
+      oxygen-generator-rating
+      )
+
+  (-> (slurp "../input.txt")
+      line-seq)
+
+  )
+
+(defn- main
+  [x]
+  (let [lines (parse-input "../input.txt")]
+    (println "Power consumption "
+             (* (gamma-rate lines)
+                (epsilon-rate lines)))))
