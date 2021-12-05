@@ -23,7 +23,7 @@ with open('input.txt') as input_file:
     input_file.readline()  # Skip the first blank line
 
     board_index = 0
-    # Columns need to be build up over several lines, so we keep a "working" (in-progress) list of them
+    # Columns need to be built up over several lines, so we keep a "working" (in-progress) list of them
     working_cols = None
     for line in input_file:
         if line.strip() == "":  # Blank line
