@@ -42,7 +42,7 @@
 
 (defn simulate-days
   [🐟🐟🐟 num-days]
-  (nth (iterate simulate-day 🐟🐟🐟) 256))
+  (nth (iterate simulate-day 🐟🐟🐟) num-days))
 
 (comment
   (-> "../input.txt"
