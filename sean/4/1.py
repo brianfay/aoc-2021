@@ -6,6 +6,26 @@
 # 2-tuples in a (key, value) format, which allows for some special operations to be done "by key" (though I don't really
 # use this until part 2).
 
+# To this end, I wanted to use an approach that felt more RDD-ish. So instead of cleverly reducing the problem to an
+# elegant bit of math like Ben did, I exploded it into a giant mess of brute force. I parsed the input data into a giant
+# stream where rows and columns were stored side-by-side, each paired with their board index so I could figure out where
+# they came from. Then I broadcast the list of drawn numbers to the entire cluster and played bingo until all 1000 rows
+# and columns had won (yeah, way more information that I actually needed). Naturally, I then knew which row or column
+# had won first, so then I just had to get all the numbers from that board and basically play through it again to figure
+# out which ones were left unmarked. Altogether it was quite silly, but also quite parallelizable, and thus a good deal
+# faster than yesterday's solution! The bingo part took about a second to run locally on my MacBook: still much slower
+# than just using Python, but hey, it scales like a dragon! ...Theoretically.
+
+#        )_    ,(
+#        )_\  /_(    {
+#         )_\,--_.V. }  ~~~ ~
+#       oOo/  ,---- < ~~~~~~
+#       8 |vv|         ~~ ~
+#         \vv\
+#    ,^^^_/  /
+#    `--___-'
+#       |_ |_
+
 from pyspark.conf import SparkConf
 from pyspark.context import SparkContext
 
