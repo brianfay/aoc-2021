@@ -5,15 +5,7 @@
 (defn input-list->🐟🐟🐟
   [🐟-list]
   (let [freaky-🐟 (frequencies 🐟-list)]
-    [(or (get freaky-🐟 0) 0)
-     (or (get freaky-🐟 1) 0)
-     (or (get freaky-🐟 2) 0)
-     (or (get freaky-🐟 3) 0)
-     (or (get freaky-🐟 4) 0)
-     (or (get freaky-🐟 5) 0)
-     (or (get freaky-🐟 6) 0)
-     (or (get freaky-🐟 7) 0)
-     (or (get freaky-🐟 8) 0)]))
+    (mapv #(get freaky-🐟 % 0) (range 9))))
 
 (defn parse-input
   [f]
@@ -26,15 +18,7 @@
 
 (defn simulate-day
   [[🐟0 🐟1 🐟2 🐟3 🐟4 🐟5 🐟6 🐟7 🐟8]]
-  [🐟1
-   🐟2
-   🐟3
-   🐟4
-   🐟5
-   🐟6
-   (+ 🐟0 🐟7)
-   🐟8
-   🐟0])
+  [🐟1 🐟2 🐟3 🐟4 🐟5 🐟6 (+ 🐟0 🐟7) 🐟8 🐟0])
 
 (defn count-🐟🐟🐟
   [🐟🐟🐟]
