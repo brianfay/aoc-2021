@@ -4,7 +4,7 @@
 import statistics
 
 with open('input.txt') as input_file:
-    positions = list(map(int, input_file.readline().split(',')))
+    positions = [int(num) for num in input_file.readline().split(',')]
 
 median_position = round(statistics.median(positions))
 print(sum(abs(position - median_position) for position in positions))

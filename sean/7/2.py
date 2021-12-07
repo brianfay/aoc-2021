@@ -10,7 +10,7 @@
 # How cool it would be to actually know math?! Approximatey 3 ↑↑↑↑ 3 cool, I reckon.
 
 with open('input.txt') as input_file:
-    positions = list(map(int, input_file.readline().split(',')))
+    positions = [int(num) for num in input_file.readline().split(',')]
 
 def fuel_distance(a, b):
     return abs(a - b) * (1 + abs(a - b)) / 2  # Arithmetic series
