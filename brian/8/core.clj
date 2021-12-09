@@ -41,7 +41,6 @@
         mapping-2-3-5 (filter #(= 5 (count %)) pattern-codes)
         a (difference mapping-7 mapping-1)
         bd (difference mapping-4 mapping-7)
-        eg (difference mapping-8 mapping-7 mapping-4)
         gbfa (apply intersection mapping-0-6-9)
         gda (apply intersection mapping-2-3-5)
         bf (difference gbfa gda)
