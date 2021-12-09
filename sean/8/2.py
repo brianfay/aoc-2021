@@ -7,37 +7,18 @@
 # 4    5
 #  6666
 
-# Unique amount of segments:
-# 2 segs -> 1: (_, _, 2, _, _, 5, _)
-# 3 segs -> 7: (0, _, 2, _, _, 5, _)
-# 4 segs -> 4: (_, 1, 2, 3, _, 5, _)
-# 7 segs -> 8: (0, 1, 2, 3, 4, 5, 6)
-
-# 5 segments:
-# 2: (0, _, 2, 3, 4, _, 6)
-# 3: (0, _, 2, 3, _, 5, 6)
-# 5: (0, 1, _, 3, _, 5, 6)
-
-# 6 segments:
-# 0: (0, 1, 2, _, 4, 5, 6)
-# 6: (0, 1, _, 3, 4, 5, 6)
-# 9: (0, 1, 2, 3, _, 5, 6)
-
-# First we identify the numbers with a unique amount of segments, then we use those to narrow down which letters could
-# correspond to which segments, and then we deduce the rest from there.
-
 ALL_WIRES = {'a', 'b', 'c', 'd', 'e', 'f', 'g'}
 NUMBER_TO_SEGMENTS = [
-    {0, 1, 2, 4, 5, 6},     # 0
-    {2, 5},                 # 1
-    {0, 2, 3, 4, 6},        # 2
-    {0, 2, 3, 5, 6},        # 3
-    {1, 2, 3, 5},           # 4
-    {0, 1, 3, 5, 6},        # 5
-    {0, 1, 3, 4, 5, 6},     # 6
-    {0, 2, 5},              # 7
+    {0, 1, 2,    4, 5, 6},  # 0
+    {2,          5      },  # 1
+    {0,    2, 3, 4,    6},  # 2
+    {0,    2, 3,    5, 6},  # 3
+    {   1, 2, 3,    5   },  # 4
+    {0, 1,    3,    5, 6},  # 5
+    {0, 1,    3, 4, 5, 6},  # 6
+    {0,    2,       5   },  # 7
     {0, 1, 2, 3, 4, 5, 6},  # 8
-    {0, 1, 2, 3, 5, 6}      # 9
+    {0, 1, 2, 3,    5, 6}   # 9
 ]
 total_value = 0
 
@@ -62,6 +43,7 @@ with open('input.txt') as input_file:
         # This one is a mapping from segment index to a set of wire letters that could correspond to that segment
         segment_to_wires = [ALL_WIRES.copy() for _ in range(7)]  # At first, any wire could correspond to any segment
 
+        # First we use the numbers with a unique amount of segments to narrow down the segment_to_wires mapping
         for pattern in input_patterns:
             # Python's too cool for switch statements
             if len(pattern) == 2:
@@ -73,7 +55,7 @@ with open('input.txt') as input_file:
             elif len(pattern) == 7:
                 pass # 8 doesn't help us narrow down wires
 
-        # At this point, we've narrowed down the possible-wires-per-segment mapping like this:
+        # At this point, we've narrowed down the mapping like this:
         # [{'f'}, {'c', 'b'}, {'g', 'e'}, {'c', 'b'}, {'a', 'd'}, {'g', 'e'}, {'a', 'd'}]
         for pattern in input_patterns:
             if len(pattern) == 5 and segment_to_wires[2] <= pattern:

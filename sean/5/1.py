@@ -18,6 +18,7 @@ sc = SparkContext(conf=SparkConf().setAppName('aoc-2021-5.1').setMaster('local')
 rdd = sc.parallelize(data)
 
 def get_step(a, b):
+    """Fun fact: This is called a 'sign function' or 'signum function' in mathematics and 'cmp' in Python 2."""
     if b > a:
         return 1
     elif b < a:
