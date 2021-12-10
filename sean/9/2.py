@@ -17,9 +17,9 @@ def survey_basin(x, y):
     """Add all the coordinates of the basin containing the given low point to the global coordinates set."""
     global heightmap, coordinates
     coordinates.add((x, y))
-    if x > 0 and heightmap[x - 1][y] < 9 and (x - 1, y) not in coordinates: survey_basin(x - 1, y)
-    if x < len(heightmap) - 1 and heightmap[x + 1][y] < 9 and (x + 1, y) not in coordinates: survey_basin(x + 1, y)
-    if y > 0 and heightmap[x][y - 1] < 9 and (x, y - 1) not in coordinates: survey_basin(x, y - 1)
+    if x > 0                     and heightmap[x - 1][y] < 9 and (x - 1, y) not in coordinates: survey_basin(x - 1, y)
+    if x < len(heightmap) - 1    and heightmap[x + 1][y] < 9 and (x + 1, y) not in coordinates: survey_basin(x + 1, y)
+    if y > 0                     and heightmap[x][y - 1] < 9 and (x, y - 1) not in coordinates: survey_basin(x, y - 1)
     if y < len(heightmap[x]) - 1 and heightmap[x][y + 1] < 9 and (x, y + 1) not in coordinates: survey_basin(x, y + 1)
     return coordinates
 
