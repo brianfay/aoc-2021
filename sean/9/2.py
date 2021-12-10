@@ -1,6 +1,6 @@
 # Feelin' laaazyyyyy
 
-import functools  # Bring on the func ♬♬♪♬
+import functools  # Bring on the func ♪.♬♪♬♪♬♬
 
 with open('input.txt') as input_file:
     heightmap = [[int(num_str) for num_str in line.rstrip()] for line in input_file]
