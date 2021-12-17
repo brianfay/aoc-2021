@@ -255,8 +255,22 @@
       (sort-by val)
       ((juxt last first))
       (map second)
-      (apply -)
-      )
+      (apply -))
+
+
+  ;;problem 1 answer
+  (->> (count-smarter (:input-string input) (:replacements input) 10)
+       (sort-by val)
+       ((juxt last first))
+       (map second)
+       (apply -))
+
+  ;;problem 2 answer
+  (->> (count-smarter (:input-string input) (:replacements input) 40)
+       (sort-by val)
+       ((juxt last first))
+       (map second)
+       (apply -))
 
   (next-gen-pairs "NN" example-replacements)
   (get-next-gen-pairs "NC" example-replacements)
