@@ -21,7 +21,8 @@ fn main() {
     let mut all_flashed = false;
     let mut step = 0;
 
-    // Part 1: "simulate 100 steps"; part 2: "What is the first step during which all octopuses flash?"
+    // Part 1: "simulate 100 steps" and count the flashes
+    // Part 2: "What is the first step during which all octopuses flash?"
     while !all_flashed || step < 100 {
         // "First, the energy level of each octopus increases by 1."
         // "Then, any octopus with an energy level greater than 9 flashes."
@@ -56,7 +57,7 @@ fn main() {
         and the total number of flashes after 100 steps was {}!", first_flash, total_flash_count)).unwrap();
 }
 
-/// Helper method for getting a crustacean to say a thing
+/// Convenience method for getting a crustacean to say a thing
 fn have_ferris_say(message: &str) -> Result<(), io::Error> {
     let stdout = stdout();
     let width = cmp::min(message.chars().count(), 40);
@@ -75,7 +76,7 @@ fn increment_and_flash(x: usize, y: usize, matrix: &mut Vec<Vec<i32>>) -> i32 {
     0
 }
 
-/// Make the octopus at the given coordinates flash
+/// Make the octopus at the given coordinates flash and return the number of flashes that occurred as a result
 fn flash(x: usize, y: usize, matrix: &mut Vec<Vec<i32>>) -> i32 {
     matrix[x][y] = -1; // Placeholder to indicate this one flashed
 
