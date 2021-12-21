@@ -1,7 +1,4 @@
-(ns aoc-14-clj.core
-  (:require [clojure.java.io :as io]
-            [clojure.string :as st]
-            [clojure.set :as cset :refer [difference union]]))
+(ns aoc-16-clj.core)
 
 (def hex->binary
   {"0" "0000"
