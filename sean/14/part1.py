@@ -32,10 +32,10 @@ def solve(steps):
             letter_counts[letter] += count
 
     # Insight from Bee: All letters are double-counted except the first and last
-    for letter in letter_counts.keys():
-        letter_counts[letter] //= 2
     letter_counts[starting_string[0]] += 1
     letter_counts[starting_string[-1]] += 1
+    for letter in letter_counts.keys():
+        letter_counts[letter] //= 2
 
     print(max(letter_counts.values()) - min(letter_counts.values()))
 
