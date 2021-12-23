@@ -1,4 +1,4 @@
-# Prerequisite: matplotlib v3 needs to be installed
+# Prerequisite: matplotlib 3 needs to be installed
 from matplotlib import pyplot
 
 def solve(part):

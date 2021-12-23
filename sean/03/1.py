@@ -1,4 +1,4 @@
-# Prerequisite: PySpark and Java 8 must be installed
+# Prerequisite: PySpark 3 and Java 8 must be installed
 
 # Today I decided to use Spark, both for over-engineering purposes and to help me learn it.
 # It's a completely silly solution, breaking up a simple data set into a super-complicated Spark Dataset just to find

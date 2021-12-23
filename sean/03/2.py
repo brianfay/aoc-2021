@@ -1,4 +1,4 @@
-# Prerequisite: PySpark and Java 8 must be installed
+# Prerequisite: PySpark 3 and Java 8 must be installed
 
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *

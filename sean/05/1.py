@@ -1,4 +1,4 @@
-# Prerequisite: PySpark and Java 8 must be installed
+# Prerequisite: PySpark 3 and Java 8 must be installed
 
 # It's RDDs again for another quick-and-dirty Spark solution.
 

@@ -1,4 +1,4 @@
-# Prerequisite: PySpark and Java 8 must be installed
+# Prerequisite: PySpark 3 and Java 8 must be installed
 
 # For today, I wanted to practice using RDDs (Resilient Distributed Datasets), which are a Spark data structure that's
 # lower level than the Datasets (a.k.a. DataFrames) I used yesterday. (An RDD is basically a single stream of
