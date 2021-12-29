@@ -10,10 +10,6 @@ class SillyString:  # Hey, I get to name it
         self.part = part
         self.seek_pos = 0
 
-    def peek(self, n):
-        """Return the next n bits without seeking ahead."""
-        return self.content[self.seek_pos:self.seek_pos + n]
-
     def read_str(self, n):
         """Read the next n bits into a string."""
         self.seek_pos += n
