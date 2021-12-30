@@ -1,12 +1,13 @@
 # Let's make a class, just for funsies
 
-import math
+from math import prod
 
 class SillyString:  # Hey, I get to name it
     """Provides streaming read operations on a string of bits converted from a hex string from the given input file."""
     def __init__(self, file_name, part):
         with open(file_name) as input_file:
-            self.content = format(int(input_file.readline().rstrip(), 16), 'b')
+            hex_string = input_file.readline().rstrip()
+        self.content = format(int(hex_string, 16), 'b').zfill(len(hex_string) * 4)  # Binary string with leading 0s
         self.part = part
         self.seek_pos = 0
 
@@ -33,7 +34,7 @@ class SillyString:  # Hey, I get to name it
         version_number = self.read_int(3)
         type_id = self.read_int(3)
 
-        if type_id == 4:
+        if type_id == 4:  # Literal value
             literal_value = self.read_literal_value()
             if   self.part == 1: packet_value = version_number
             elif self.part == 2: packet_value = literal_value
@@ -54,7 +55,7 @@ class SillyString:  # Hey, I get to name it
                 packet_value = version_number + sum(subpacket_values)
             elif self.part == 2:
                 if   type_id == 0: packet_value = sum(subpacket_values)
-                elif type_id == 1: packet_value = math.prod(subpacket_values)
+                elif type_id == 1: packet_value = prod(subpacket_values)
                 elif type_id == 2: packet_value = min(subpacket_values)
                 elif type_id == 3: packet_value = max(subpacket_values)
                 elif type_id == 5: packet_value = int(subpacket_values[0] > subpacket_values[1])
